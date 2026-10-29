@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drive Viewer — OAuth 2.0</title><link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/" aria-label="Drive Viewer inicio"><span class="logo">☁</span> Drive Viewer <span class="pill">OAuth 2.0</span></a>
+  <nav><button class="navbtn active" data-view="home">Inicio</button><button class="navbtn hidden" id="navDrive" data-view="dashboard">Mi Drive</button><button class="navbtn" data-view="flow">Flujo OAuth</button></nav>
+</header>
+<main class="wrap">
+  <div id="alert" class="alert hidden" role="alert"></div>
+  <section id="home" class="view active">
+    <div class="hero">
+      <div class="heroicon">☁</div><span class="eyebrow">ACCESO DELEGADO · GOOGLE</span>
+      <h1>Tus archivos,<br>en un solo lugar.</h1>
+      <p class="lead">Iniciá sesión con tu cuenta de Google y consultá los archivos de Drive que tenés permiso para ver.</p>
+      <a class="googlebtn" href="/auth/google"><span class="gmark">G</span> Continuar con Google <span>→</span></a>
+      <p class="tiny muted">La contraseña se ingresa únicamente en la página oficial de Google.</p>
+      <div class="featuregrid">
+        <article class="feature"><span class="featureicon">🔐</span><h3>OAuth 2.0</h3><p>Autorización delegada mediante el flujo de código.</p></article>
+        <article class="feature"><span class="featureicon">👤</span><h3>Tu perfil</h3><p>Nombre, correo y foto devueltos por Google.</p></article>
+        <article class="feature"><span class="featureicon">📁</span><h3>Google Drive</h3><p>Metadatos de archivos obtenidos desde la API.</p></article>
+      </div>
+    </div>
+    <p class="footerhint">Proyecto académico · El token y el secreto de cliente se mantienen en el servidor.</p>
+  </section>
+  <section id="dashboard" class="view">
+    <div class="sectionhead"><div><span class="eyebrow">TU ESPACIO</span><h1 class="pagetitle">Mi Drive</h1><p class="muted">Perfil autenticado y archivos de Google Drive.</p></div><span class="status"><i></i> Sesión iniciada</span></div>
+    <div class="stats"><article class="stat"><span>Archivos listados</span><strong id="fileCount">—</strong><small>en esta consulta</small></article><article class="stat"><span>Proveedor</span><strong>Google</strong><small>OAuth 2.0</small></article><article class="stat"><span>Permiso de Drive</span><strong>Solo lectura</strong><small>Metadatos de archivos</small></article></div>
+    <div class="columns">
+      <section class="card">
+        <div class="sectionhead compact"><div><h2>Mis archivos</h2><p class="muted tiny">Datos obtenidos desde Google Drive API</p></div><button id="refresh" class="outline">↻ Actualizar</button></div>
+        <input id="search" class="search" placeholder="⌕  Buscar archivos por nombre o tipo…" aria-label="Buscar archivos">
+        <div class="tablewrap"><table><thead><tr><th>Nombre</th><th>Tipo</th><th>Última modificación</th><th></th></tr></thead><tbody id="files"></tbody></table></div>
+        <div id="loading" class="empty hidden">Cargando archivos de Drive…</div><div id="noFiles" class="empty hidden">No se encontraron archivos.</div>
+      </section>
+      <aside class="card profilecard"><h2>Cuenta conectada</h2><p class="muted tiny">Información de tu cuenta de Google</p><div class="profile"><img id="avatar" alt="" src="" class="avatar hidden"><div id="avatarFallback" class="avatar">G</div><div><h3 id="profileName">Cargando…</h3><div id="profileEmail" class="muted tiny"></div></div></div><div class="detail"><span>Nombre</span><b id="detailName">—</b></div><div class="detail"><span>Correo electrónico</span><b id="detailEmail">—</b></div><div class="detail"><span>Identificador Google</span><b id="detailSub" class="truncate">—</b></div><button id="logout" class="danger full">Cerrar sesión</button></aside>
+    </div>
+    <p class="notice"><b>Permiso solicitado:</b> <code>drive.metadata.readonly</code>. Permite consultar metadatos de archivos; no concede permiso para modificarlos.</p>
+  </section>
+  <section id="flow" class="view">
+    <div class="sectionhead"><div><span class="eyebrow">VISTA DIDÁCTICA</span><h1 class="pagetitle">Flujo OAuth 2.0</h1><p class="muted">Los tres actores y el intercambio de mensajes.</p></div><span class="pill">Authorization Code</span></div>
+    <div class="actors"><article><span>ACTOR 01</span><h3>Cliente</h3><p>Drive Viewer inicia el acceso y recibe el callback.</p></article><article><span>ACTOR 02</span><h3>Servidor de autorización</h3><p>Google autentica al usuario y obtiene su consentimiento.</p></article><article><span>ACTOR 03</span><h3>Servidor de recursos</h3><p>Google Drive valida el token y entrega los metadatos permitidos.</p></article></div>
+    <div class="columns flowcols"><section class="card"><div class="sectionhead compact"><div><h2>Intercambio de mensajes</h2><p class="muted tiny">Recorré los pasos para comprender el protocolo.</p></div></div><div class="buttons"><button class="outline" id="resetFlow">Reiniciar</button><button class="primary" id="nextStep">Siguiente paso →</button></div><div class="log" id="log" aria-live="polite"></div><p class="notice">El código y los tokens reales nunca se muestran aquí. Esta vista describe el flujo; la autenticación se realiza en los endpoints del servidor.</p></section>
+    <aside class="card"><h2>Estado del flujo</h2><div class="detail"><span>Redirección</span><b id="redirectStatus">Pendiente</b></div><div class="detail"><span>Código</span><b id="codeStatus">No recibido</b></div><div class="detail"><span>Access token</span><b id="tokenStatus">No emitido</b></div><div class="detail"><span>Google Drive API</span><b id="apiStatus">Sin llamada</b></div><p class="muted tiny">Los estados de esta sección son ilustrativos y no representan credenciales.</p></aside></div>
+  </section>
+  <footer>Drive Viewer · Matemática Aplicada · Prototipo educativo</footer>
+</main>
+<script src="/app.js" defer></script>
+</body></html>

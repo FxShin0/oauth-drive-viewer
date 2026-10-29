@@ -1,0 +1,12 @@
+{
+  "name": "oauth-drive-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Implementación educativa de OAuth 2.0 con Google y listado de Google Drive usando Node.js sin paquetes OAuth ni framework web.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": { "node": ">=20" }
+}
